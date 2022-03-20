@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { auth, db } from '../firebase';
 import SendMessage from './SendMessage';
 import SignOut from './SignOut';
 
 export default function Line() {
   // FirebaseよりDB情報を受け取る
+  const scroll = useRef();
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     db.collection('messages')
@@ -16,6 +17,7 @@ export default function Line() {
   }, []);
   return (
     <div>
+      {console.log(messages)}
       <SignOut />
       <div className='msgs'>
         {messages.map(({ id, text, photoURL, uid }) => (
@@ -24,16 +26,17 @@ export default function Line() {
             <div
               key={id}
               className={`msg${
-                uid === auth.currentUser.uid ? 'sent' : 'recived'
+                uid === auth.currentUser.uid ? 'sent' : 'received'
               }`}
             >
-              <img src={photoURL} alt='' />
+              <img src={photoURL} />
               <p>{text}</p>
             </div>
           </div>
         ))}
       </div>
-      <SendMessage />
+      <SendMessage scroll={scroll} />
+      <div ref={scroll}></div>
     </div>
   );
 }

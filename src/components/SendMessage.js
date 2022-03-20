@@ -4,8 +4,10 @@ import firebase from 'firebase/compat/app';
 import { Input } from '@material-ui/core';
 import SendIcon from '@mui/icons-material/Send';
 
-export default function SendMessage() {
+// eslint-disable-next-line react/prop-types
+export default function SendMessage({ scroll }) {
   const [message, setMessage] = useState('');
+
   function sendMessage(e) {
     e.preventDefault();
 
@@ -18,24 +20,28 @@ export default function SendMessage() {
       createAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     setMessage('');
+    // eslint-disable-next-line react/prop-types
+    scroll.current.scrollIntoView({ behavior: 'smooth' });
   }
   return (
-    <div className='sendMsg'>
+    <div>
       <form onSubmit={sendMessage}>
-        <Input
-          style={{
-            width: '78%',
-            fontSize: '15px',
-            fontWeight: '550',
-            marginLeft: '5px',
-            marginBottom: '-3px',
-          }}
-          placeholder='メッセージを入力して下さい'
-          alt='text'
-          onChange={(e) => setMessage(e.target.value)}
-          value={message}
-        />
-        <SendIcon style={{ color: '#7AC2FF', marginLeft: '20px' }} />
+        <div className='sendMsg'>
+          <Input
+            style={{
+              width: '78%',
+              fontSize: '15px',
+              fontWeight: '550',
+              marginLeft: '5px',
+              marginBottom: '-3px',
+            }}
+            placeholder='メッセージを入力'
+            type='text'
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <SendIcon style={{ color: '#7AC2FF', marginLeft: '20px' }} />
+        </div>
       </form>
     </div>
   );
