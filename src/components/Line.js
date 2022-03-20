@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import SignOut from './SignOut';
 
-function Line() {
+export default function Line() {
   return (
-    <div>LINEです</div>
-  )
+    <div>
+      <SignOut />
+    </div>
+  );
 }
-
-export default Line
