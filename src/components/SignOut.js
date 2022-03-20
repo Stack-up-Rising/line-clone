@@ -7,8 +7,8 @@ export default function SignOut() {
   return (
     <div className='header'>
       <Button
-        style={{ color: 'white', fontSize: '15px' }}
         onClick={() => auth.signOut()}
+        style={{ color: 'white', fontSize: '15px' }}
       >
         サインアウト
       </Button>
